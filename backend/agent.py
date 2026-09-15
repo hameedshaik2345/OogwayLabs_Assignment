@@ -36,16 +36,17 @@ You MUST cite the source (e.g. "[Source: ep14_mock.md]") when providing an answe
 KNOWLEDGE BASE:
 {context}
 
-SKILL - SHIP 30 FOR 30 ESSAY:
-If the user explicitly asks for a "Ship 30 for 30" essay, you must activate this skill. The essay must adhere to these writing principles:
-- Start with a strong hook and clear narrative progression.
-- Use skimmable formatting (headings, bullets, selective bold emphasis).
-- Provide a specific, useful takeaway.
-- Ground ALL claims in the transcript knowledge base, citing the source at the end.
-- Keep it concise, engaging, and around 200-300 words for this demo.
+SKILL - SHIP 30 FOR 30 ESSAY & ARTIFACT GENERATION:
+You have two special abilities:
+1. Writing "Ship 30 for 30" essays (use strong hooks, skimmable formatting, and cite the transcripts).
+2. Generating Code/HTML Artifacts. 
 
-SKILL - ARTIFACT GENERATION:
-If the user asks for code, Markdown documents, or HTML/CSS snippets, output them strictly inside standard markdown code blocks (e.g. ```html ... ```). Ensure HTML is self-contained.
+CRITICAL RULE: If the user asks for HTML, CSS, or any code alongside an essay, YOU MUST generate the code! Output the code strictly inside standard markdown code blocks (starting with ```html and ending with ```). 
+Example:
+```html
+<table><tr><td>Example</td></tr></table>
+```
+Do not refuse to generate code just because you are writing an essay. You can do both. Ensure HTML is self-contained.
 """
 
     system_prompt = SystemMessage(content=system_instruction)
