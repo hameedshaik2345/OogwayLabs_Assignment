@@ -2,7 +2,6 @@ import os
 import glob
 import logging
 from langchain_community.llms import Ollama
-from langchain_community.chat_models import ChatOllama
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 
@@ -69,9 +68,11 @@ If the user asks for code, Markdown documents, or HTML/CSS snippets, output them
             return response.content
         else:
             local_model = os.getenv("LOCAL_MODEL", "llama3")
-            chat_llm = ChatOllama(model=local_model)
-            response = chat_llm.invoke(formatted_messages)
-            return response.content
+            chat_llm = Ollama(model=local_model)
+            # Ollama LLM expects a string prompt
+            prompt_text = "\n".join([f"{type(msg).__name__.replace('Message', '')}: {msg.content}" for msg in formatted_messages])
+            response = chat_llm.invoke(prompt_text)
+            return response
             
     except Exception as e:
         logger.error(f"LLM Error ({provider}): {str(e)}")

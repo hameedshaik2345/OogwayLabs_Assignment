@@ -29,3 +29,20 @@
 - **Hallucination Risk:** High if the LLM isn't strictly prompted. Mitigated by prompt engineering and grounding context.
 - **Artifact Security:** Rendering arbitrary HTML from an LLM is dangerous. Trade-off made: using an `iframe` with `sandbox="allow-same-origin"` and sanitizing via DOMPurify before injection.
 - **Local Model Quality:** Local models like `llama3` may struggle with complex artifact generation compared to Claude 3.5 Sonnet. User toggle allows fallback to cloud.
+
+## 6. Flows
+1. **User asks a question:** Frontend sends message to `/api/chat` -> Backend loads transcripts -> Agent generates grounded answer -> Frontend renders markdown.
+2. **User requests an artifact (e.g. Ship 30 for 30 essay):** Agent recognizes the skill trigger -> Generates HTML/Markdown inside code blocks -> Frontend regex parses the block -> Sanitize with DOMPurify -> Render in Artifact Viewer iframe.
+
+## 7. Acceptance Criteria
+- [x] Application handles chat sessions persistently (via SQLAlchemy).
+- [x] Application can answer growth questions and explicitly cite transcript sources.
+- [x] Application generates artifacts and renders them side-by-side.
+- [x] Evaluator can run the application with a single command (Docker Compose) or without Docker using SQLite.
+- [x] Evaluator can configure Local (Ollama) vs Cloud (Anthropic) in the `.env` file.
+
+## 8. Implementation Plan
+- **Phase 1:** Setup Git, Docker Compose, and directory structure.
+- **Phase 2:** Build FastAPI backend (SQLAlchemy models, agent routing logic).
+- **Phase 3:** Build Next.js frontend (Chat UI, Glassmorphism CSS, secure Artifact Viewer).
+- **Phase 4:** Write comprehensive documentation and prepare for handoff.
